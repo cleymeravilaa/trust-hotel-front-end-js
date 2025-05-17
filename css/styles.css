@@ -1,0 +1,34 @@
+/* Reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+
+/* Layout */
+.header, .footer { background: #004080; color: white; padding: 1rem; }
+.container { padding: 1rem; }
+
+/* Navbar */
+.navbar { display: flex; justify-content: space-between; align-items: center; }
+.navbar .logo { font-size: 1.2rem; font-weight: bold; }
+.navbar ul { list-style: none; display: flex; gap: 1rem; }
+.navbar a { color: white; text-decoration: none; }
+.navbar a.active { text-decoration: underline; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+th { background: #e0e0e0; }
+
+/* Forms */
+form { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+form input, form select { padding: 0.5rem; flex: 1 1 200px; }
+form button { padding: 0.5rem 1rem; background: #004080; color: white; border: none; cursor: pointer; border-radius: 4px; }
+
+/* Cards (Dashboard) */
+.cards { display: flex; gap: 1rem; flex-wrap: wrap; }
+.card { background: white; flex: 1 1 150px; padding: 1rem; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
+
+/* Utility */
+.hidden { display: none; }
+.btn { padding: 0.3rem 0.6rem; border: none; cursor: pointer; border-radius: 4px; }
+.btn.edit { background: #f0ad4e; color: white; }
+.btn.delete { background: #d9534f; color: white; }

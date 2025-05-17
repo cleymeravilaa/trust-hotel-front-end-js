@@ -1,39 +1,75 @@
-const API_BASE_URL = 'https://improved-goldfish-4jqp7xj7666gfqpxw-8080.app.github.dev/api/v1'
+const hotelList = document.getElementById("hotel-list");
+const guestList = document.getElementById("guest-list");
+const reservationList = document.getElementById("reservation-list");
 
-async function getHotels(){
-    try {
-        const response = await fetch(`${API_BASE_URL}/hotels`);
-        if(!response.ok){
-            throw new Error('Erorr al obtener los hoteles');
-        }
+let hotels = [];
+let guests = [];
+let reservations = [];
 
-        return await response.json();
-    } catch (error){
-        console.error(error);
-        return [];
-    }
+function showSection(id) {
+  document.querySelectorAll(".section").forEach((section) => {
+    section.classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
 }
 
-function loadHotels(hotels){
-    const container = document.getElementById('main-content');
-    container.innerHTML = '';
-
-    hotels.forEach(hotel => {
-        const div = document.createElement('div');
-        div.className = 'hotel';
-        div.innerHTML = `
-            <h2>Nombre del hotel: ${hotel.name}</h2>
-            <p>Dirección: ${hotel.address}</p>
-            <p>Numero de estrella (categoria): ${hotel.numberStars}</p>
-            <p>Numero de telefono: ${hotel.phone}</p>
-        `;
-        container.appendChild(div);
-    });
+function addHotel() {
+  const name = document.getElementById("hotel-name").value.trim();
+  if (name) {
+    hotels.push(name);
+    updateHotelList();
+    document.getElementById("hotel-name").value = "";
+  }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    let hotels = await getHotels();
-    console.log(hotels);
-    loadHotels(hotels);
-});
+function updateHotelList() {
+  hotelList.innerHTML = "";
+  hotels.forEach((hotel) => {
+    const li = document.createElement("li");
+    li.textContent = hotel;
+    hotelList.appendChild(li);
+  });
+}
+
+function addGuest() {
+  const name = document.getElementById("guest-name").value.trim();
+  if (name) {
+    guests.push(name);
+    updateGuestList();
+    document.getElementById("guest-name").value = "";
+  }
+}
+
+function updateGuestList() {
+  guestList.innerHTML = "";
+  guests.forEach((guest) => {
+    const li = document.createElement("li");
+    li.textContent = guest;
+    guestList.appendChild(li);
+  });
+}
+
+function addReservation() {
+  const hotel = document.getElementById("reservation-hotel").value.trim();
+  const guest = document.getElementById("reservation-guest").value.trim();
+  const date = document.getElementById("reservation-date").value;
+
+  if (hotel && guest && date) {
+    reservations.push({ hotel, guest, date });
+    updateReservationList();
+    document.getElementById("reservation-hotel").value = "";
+    document.getElementById("reservation-guest").value = "";
+    document.getElementById("reservation-date").value = "";
+  }
+}
+
+function updateReservationList() {
+  reservationList.innerHTML = "";
+  reservations.forEach((res) => {
+    const li = document.createElement("li");
+    li.textContent = `${res.guest} reservó en ${res.hotel} para el ${res.date}`;
+    reservationList.appendChild(li);
+  });
+}
+
 

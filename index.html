@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main-styles.css">
-    <title>Trust Hotels - Gestión de Cadena Hotelera</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HotelChain Management</title>
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <nav id="nav-bar">
-        <a href="#">Inicio</a>
-        <a href="#">Hoteles</a>
-        <a href="#">Empleados</a>
-        <a href="#">Clientes</a>
-        <a href="#">Habitaciones </a>
-    </nav>
-    <main id="main-content">
+  <div id="navbar"></div>
+  <div id="main-content" class="container"></div>
+  <div id="footer"></div>
 
-    </main>
-    <footer id="footer">
-        <p>&copy; 2025 Gestión de Cadena Hotelera</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <!-- Components -->
+  <script src="js/components/navbar.js"></script>
+  <script src="js/components/footer.js"></script>
+  <!-- Services -->
+  <script src="js/services/api.js"></script>
+  <!-- Pages -->
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/admin-hotels.js"></script>
+  <script src="js/pages/admin-rooms.js"></script>
+  <script src="js/pages/admin-employees.js"></script>
+  <script src="js/pages/reception-clients.js"></script>
+  <script src="js/pages/reception-reservations.js"></script>
+  <script src="js/pages/reception-stays.js"></script>
+  <script src="js/pages/reception-invoices.js"></script>
+  <!-- App -->
+  <script src="js/app.js"></script>
 </body>
 </html>
