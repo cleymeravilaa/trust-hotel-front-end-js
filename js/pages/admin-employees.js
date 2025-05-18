@@ -12,8 +12,8 @@ async function loadEmployees() {
     <tr>
       <td>${e.dni}</td><td>${e.name}</td><td>${e.address}</td><td>${e.type}</td>
       <td>
-        <button class="btn edit" onclick="editEmployee(${e.id})">✏️</button>
-        <button class="btn delete" onclick="deleteEmployee(${e.id})">🗑️</button>
+          <button class="btn edit" onclick="editEmployee(${e.employeeId})">✏️</button>
+        <button class="btn delete" onclick="deleteEmployee(${e.employeeId})">🗑️</button>
       </td>
     </tr>`).join('');
 }
@@ -23,9 +23,9 @@ function showEmployeeForm(e={}) {
   f.classList.toggle('hidden', false);
   f.innerHTML = `
     <form onsubmit="saveEmployee(event,${e.employeeId||''})">
-      <input name="nombre" value="${e.name||''}" placeholder="Nombre" required>
-      <input name="rol" value="${e.type||''}" placeholder="Rol" required>
-      <input name="hotelId" value="${e.hotelId||''}" placeholder="HotelId" required>
+      <input name="name" value="${e.name||''}" placeholder="Nombre" required>
+      <input name="address" value="${e.address||''}" placeholder="Rol" required>
+      <input name="type" value="${e.type||''}" placeholder="HotelId" required>
       <button type="submit">Guardar</button>
       <button type="button" onclick="this.parentElement.parentElement.classList.add('hidden')">Cancelar</button>
     </form>`;

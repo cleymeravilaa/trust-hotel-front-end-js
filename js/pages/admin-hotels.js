@@ -11,7 +11,13 @@ async function loadHotels() {
     <button onclick="showHotelForm()">+ Nuevo Hotel</button>
     <div id="hotel-form" class="hidden"></div>
     <table><thead>
-      <tr><th>ID</th><th>Nombre</th><th>Ubicación</th><th>Acciones</th></tr>
+      <tr><th>ID</th>
+      <th>Nombre</th>
+      <th>Categoria</th>
+      <th>Telefono</th>
+      <th>Direccion</th>
+      <th>Director</th>
+      <th>Acciones</th></tr>
     </thead><tbody id="hotels-tbody"></tbody></table>`;
   const tbody = document.getElementById('hotels-tbody');
   const hotels = await apiGet('hotels');
@@ -19,7 +25,10 @@ async function loadHotels() {
     <tr>
       <td>${h.hotelId}</td>
       <td>${h.name}</td>
+      <td>${h.category}</td>
+      <td>${h.phone}</td>
       <td>${h.address}</td>
+      <td>${h.directorId}</td>
       <td>
         <button class="btn edit" onclick="editHotel(${h.hotelId})">✏️</button>
         <button class="btn delete" onclick="deleteHotel(${h.hotelId})">🗑️</button>
@@ -32,11 +41,15 @@ function showHotelForm(h = {}) {
   f.classList.toggle('hidden', false);
   f.innerHTML = `
     <form onsubmit="saveHotel(event,${h.hotelId||''})">
-      <input name="nombre" value="${h.name||''}" placeholder="Nombre" required>
-      <input name="ubicacion" value="${h.address||''}" placeholder="Ubicación" required>
+      <input name="name" value="${h.name||''}" placeholder="Nombre" required>
+      <input name="address" value="${h.address||''}" placeholder="Ubicación" required>
+      <input name="category" value="${h.category||''}" placeholder="Categoria" required>
+      <input name="phone" value="${h.phone||''}" placeholder="Telefono" required>
+      <input name="directorId" value="${h.directorId||''}" placeholder="Director" required>
       <button type="submit">Guardar</button>
       <button type="button" onclick="this.parentElement.parentElement.classList.add('hidden')">Cancelar</button>
     </form>`;
+    console.log(h.category)
 }
 
 async function saveHotel(ev, id) {

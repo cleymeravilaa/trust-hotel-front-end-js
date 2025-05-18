@@ -5,7 +5,7 @@ async function loadInvoices() {
     <button onclick="showInvoiceForm()">+ Nueva Factura</button>
     <div id="invoice-form" class="hidden"></div>
     <table><thead>
-      <tr><th>ID</th><th>EstadiaId</th><th>$ Monto Total</th><th>Fecha Expedicion</th><th>Total Habitaciones</th><th>Acciones</th></tr>
+      <tr><th>ID</th><th>EstadiaId</th><th>Total Habitaciones</th><th>$ Monto Total</th><th>Fecha Expedicion</th><th>Acciones</th></tr>
     </thead><tbody id="invoices-tbody"></tbody></table>`;
   const inv = await apiGet('invoices');
   document.getElementById('invoices-tbody').innerHTML = inv.map(i=>`
