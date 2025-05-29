@@ -8,7 +8,7 @@ async function loadHotels() {
   const c = document.getElementById('admin-content');
   c.innerHTML = `
     <h3>Hoteles</h3>
-    <button onclick="showHotelForm()">+ Nuevo Hotel</button>
+    <button onclick="showRegisterNewHotelForm()">+ Nuevo Hotel</button>
     <div id="hotel-form" class="hidden"></div>
     <table><thead>
       <tr><th>ID</th>
@@ -36,7 +36,7 @@ async function loadHotels() {
     </tr>`).join('');
 }
 
-function showHotelForm(h = {}) {
+function showUpdateHotelForm(h = {}) {
   const f = document.getElementById('hotel-form');
   f.classList.toggle('hidden', false);
   f.innerHTML = `
@@ -46,6 +46,21 @@ function showHotelForm(h = {}) {
       <input name="category" value="${h.category||''}" placeholder="Categoria" required>
       <input name="phone" value="${h.phone||''}" placeholder="Telefono" required>
       <input name="directorId" value="${h.directorId||''}" placeholder="Director" required>
+      <button type="submit">Guardar</button>
+      <button type="button" onclick="this.parentElement.parentElement.classList.add('hidden')">Cancelar</button>
+    </form>`;
+    console.log(h.category)
+}
+
+function showRegisterNewHotelForm(h = {}) {
+  const f = document.getElementById('hotel-form');
+  f.classList.toggle('hidden', false);
+  f.innerHTML = `
+    <form onsubmit="saveHotel(event,${h.hotelId||''})">
+      <input name="name" value="${h.name||''}" placeholder="Nombre" required>
+      <input name="address" value="${h.address||''}" placeholder="Ubicación" required>
+      <input name="category" value="${h.category||''}" placeholder="Categoria" required>
+      <input name="phone" value="${h.phone||''}" placeholder="Telefono" required>
       <button type="submit">Guardar</button>
       <button type="button" onclick="this.parentElement.parentElement.classList.add('hidden')">Cancelar</button>
     </form>`;
@@ -63,7 +78,7 @@ async function saveHotel(ev, id) {
 
 async function editHotel(id) {
   const h = (await apiGet(`hotels/${id}`));
-  showHotelForm(h);
+  showUpdateHotelForm(h);
 }
 
 async function deleteHotel(id) {
