@@ -20,6 +20,7 @@ body {
 
 .container {
     padding: 1rem;
+    margin-bottom: 5rem;
 }
 
 .navbar {
@@ -42,6 +43,46 @@ body {
 }
 .navbar a.active {
     text-decoration: underline;
+}
+
+nav {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 1rem;
+}
+
+nav.navbar-buttons {
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.navbar-buttons button {
+    background: #929ea3;
+    color: white;
+    font-size: 15px;
+}
+
+.navbar-buttons button.active {
+    background: #0096C7;
+}
+
+.subheader h3 {
+    margin: 0;
+    color: rgb(11, 138, 188);
+    font-size: 1.5rem;
+}
+
+.subheader button.active {
+    background-color: #929ea3;
+    color: white;
+}
+
+h2 {
+    margin-top: 1rem;
+    color: #004080;
+    font-size: 2rem;
 }
 
 table {
@@ -75,6 +116,20 @@ form button {
     border: none;
     cursor: pointer;
     border-radius: 4px;
+}
+
+button {
+    background-color: #25aa4d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0096C7;
+    transition: ease 0.3s;
 }
 
 .cards {
@@ -114,4 +169,23 @@ form button {
     left: 0;
     bottom: 0;
     width: 100%;
+}
+
+
+#admin-content  .subheader {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    margin: 0 ;
+    flex-direction: column;
+    gap: 1.5rem
+}
+
+#reception-content .subheader {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    margin: 0 ;
+    flex-direction: column;
+    gap: 1.5rem
 }

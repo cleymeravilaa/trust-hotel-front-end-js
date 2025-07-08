@@ -1,8 +1,11 @@
 async function loadReservations() {
   const c = document.getElementById('reception-content');
   c.innerHTML = `
-    <h3>Reservas</h3>
-    <button onclick="showReservationForm()">+ Nueva Reserva</button>
+    <div class="subheader">
+      <h3>Reservas</h3>
+      <button onclick="showReservationForm()">+ Nueva Reserva</button>
+      <h4 id="title"></h4>
+    </div>
     <div id="reservation-form" class="hidden"></div>
     <table><thead>
       <tr><th>ID</th><th>Cliente</th><th>Hotel</th><th>CheckIn</th><th>CheckOut</th><th>Acciones</th></tr>

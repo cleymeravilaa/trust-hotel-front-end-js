@@ -26,10 +26,10 @@ function router() {
 function adminSubRouter() {
   main.innerHTML = `
     <h2>Administración</h2>
-    <nav>
-      <button onclick="adminPage('hotels')">Hoteles</button>
-      <button onclick="adminPage('rooms')">Habitaciones</button>
-      <button onclick="adminPage('employees')">Empleados</button>
+    <nav class="navbar-buttons">
+      <button id="hotels-btn" class="active" onclick="adminPage('hotels')">Hoteles</button>
+      <button id="rooms-btn" onclick="adminPage('rooms')">Habitaciones</button>
+      <button id="employees-btn" onclick="adminPage('employees')">Empleados</button>
     </nav>
     <div id="admin-content"></div>`;
   adminPage('hotels');
@@ -39,11 +39,11 @@ function adminSubRouter() {
 function receptionSubRouter() {
   main.innerHTML = `
     <h2>Recepción</h2>
-    <nav>
-      <button onclick="receptionPage('customers')">Clientes</button>
-      <button onclick="receptionPage('bookings')">Reservas</button>
-      <button onclick="receptionPage('stayings')">Estadías</button>
-      <button onclick="receptionPage('invoices')">Facturas</button>
+    <nav class="navbar-buttons">
+      <button id="clients-btn" class="active" onclick="receptionPage('clients')">Clientes</button>
+      <button id="bookings-btn" onclick="receptionPage('bookings')">Reservas</button>
+      <button id="stayings-btn" onclick="receptionPage('stayings')">Estadías</button>
+      <button id="invoices-btn" onclick="receptionPage('invoices')">Facturas</button>
     </nav>
     <div id="reception-content"></div>`;
   receptionPage('clients');

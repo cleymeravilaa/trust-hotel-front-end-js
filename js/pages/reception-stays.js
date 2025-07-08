@@ -1,8 +1,11 @@
 async function loadStays() {
   const c = document.getElementById('reception-content');
   c.innerHTML = `
-    <h3>Estadías</h3>
-    <button onclick="showStayForm()">+ Nueva Estadía</button>
+    <div class="subheader">
+      <h3>Estadías</h3>
+      <button onclick="showStayForm()">+ Nueva Estadía</button>
+      <h4 id="title"></h4>
+    </div>
     <div id="stay-form" class="hidden"></div>
     <table><thead>
       <tr><th>ID</th><th>ReservaId</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Acciones</th></tr>

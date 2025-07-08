@@ -1,8 +1,11 @@
 async function loadInvoices() {
   const c = document.getElementById('reception-content');
   c.innerHTML = `
-    <h3>Facturas</h3>
-    <button onclick="showInvoiceForm()">+ Nueva Factura</button>
+    <div class="subheader">
+      <h3>Facturas</h3>
+      <button onclick="showInvoiceForm()">+ Nueva Factura</button>
+      <h4 id="title"></h4>
+    </div>    
     <div id="invoice-form" class="hidden"></div>
     <table><thead>
       <tr><th>ID</th><th>EstadiaId</th><th>Total Habitaciones</th><th>$ Monto Total</th><th>Fecha Expedicion</th><th>Acciones</th></tr>
