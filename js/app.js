@@ -40,13 +40,13 @@ function receptionSubRouter() {
   main.innerHTML = `
     <h2>Recepción</h2>
     <nav class="navbar-buttons">
-      <button id="clients-btn" class="active" onclick="receptionPage('clients')">Clientes</button>
+      <button id="customers-btn" class="active" onclick="receptionPage('customers')">Clientes</button>
       <button id="bookings-btn" onclick="receptionPage('bookings')">Reservas</button>
       <button id="stayings-btn" onclick="receptionPage('stayings')">Estadías</button>
       <button id="invoices-btn" onclick="receptionPage('invoices')">Facturas</button>
     </nav>
     <div id="reception-content"></div>`;
-  receptionPage('clients');
+  receptionPage('customers');
 }
 
 // Exponer para HTML inline

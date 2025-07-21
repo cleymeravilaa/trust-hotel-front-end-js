@@ -1,4 +1,5 @@
 const hotelsName = {};
+const directors = {};
 async function adminPage(section) {
   if (section === 'hotels') return loadHotels();
   if (section === 'rooms') return loadRooms();
@@ -28,6 +29,11 @@ async function loadHotels() {
     </thead><tbody id="hotels-tbody"></tbody></table>`;
   const tbody = document.getElementById('hotels-tbody');
   const hotels = await apiGet('hotels');
+  const employees = await apiGet('employees');
+  const directorsList = employees.filter(e => e.type === 'DIRECTOR');
+  for (const h of hotels) {
+    directors[h.directorId] = directorsList.find(e => e.employeeId === h.directorId).name;
+  }
   for(const h of hotels) {
     hotelsName[h.hotelId] = h.name; 
   }
@@ -38,7 +44,7 @@ async function loadHotels() {
       <td>${h.category}</td>
       <td>${h.phone}</td>
       <td>${h.address}</td>
-      <td>${h.directorId}</td>
+      <td>${h.directorId === null ? '' : directors[h.directorId]}</td>  
       <td>
         <button class="btn edit" onclick="editHotel(${h.hotelId})">✏️</button>
         <button class="btn change-director" onclick="changeHotelDirector(${h.hotelId})">👤</button>
@@ -63,7 +69,7 @@ function showUpdateHotelForm(h = {}) {
       <button type="submit">Guardar</button>
       <button 
         class="cancel-btn"
-        onclick="cancelForm(this)"
+        onclick="cancelForm(this, null, 'hotels')"
         type="button"
       </button>
     </form>`;
@@ -82,7 +88,7 @@ function showRegisterNewHotelForm(h = {}) {
       <input name="category" value="${h.category || ''}" placeholder="Categoria" required>
       <input name="phone" value="${h.phone || ''}" placeholder="Telefono" required>
       <button type="submit">Guardar</button>
-      <button class="cancel-btn" type="button" onclick="cancelForm(this, 'new-hotel-btn')">Cancelar</button>
+      <button class="cancel-btn" type="button" onclick="cancelForm(this, 'new-hotel-btn', 'hotels')">Cancelar</button>
     </form>`;
 }
 
@@ -133,7 +139,7 @@ async function changeHotelDirector(hotelId){
         ${options}
       </select>
       <button type="submit">Guardar</button>
-      <button type="button" class="cancel-btn" onclick="cancelForm(this)">Cancelar</button>
+      <button type="button" class="cancel-btn" onclick="cancelForm(this, null, 'hotels')">Cancelar</button>
     </form>`;
   
   const f = document.getElementById('hotel-form');
@@ -155,9 +161,10 @@ async function setHotelDirector(ev) {
 }
 
 
-function cancelForm(button, id) {
+function cancelForm(button, id, section) {
   console.log('cancelar formulario');
   button.parentElement.classList.add('hidden');
   document.getElementById('title').innerText = '';
-  if (id) document.getElementById(id).classList.remove('active');  
+  if (id) document.getElementById(id).classList.remove('active');
+  if (section) adminPage(section) && receptionPage(section);
 }

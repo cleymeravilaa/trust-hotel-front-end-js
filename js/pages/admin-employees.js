@@ -42,7 +42,7 @@ function showRegisterNewEmployeeForm(e={}) {
       <input name="address" value="${e.address||''}" placeholder="Direccion" required>
       <input name="type" value="${e.type||''}" placeholder="Rol" required>
       <button type="submit">Guardar</button>
-      <button type="button" onclick="cancelForm(this, 'new-employee-btn')">Cancelar</button>
+      <button type="button" onclick="cancelForm(this, 'new-employee-btn', 'employees')">Cancelar</button>
     </form>`;
 }
 
@@ -58,7 +58,7 @@ function showEmployeeUpdateForm(e={}) {
       <input name="address" value="${e.address||''}" placeholder="Direccion" required>
       <input name="type" value="${e.type||''}" placeholder="Rol" required>
       <button type="submit">Guardar</button>
-      <button type="button" onclick="cancelForm(this)">Cancelar</button>
+      <button type="button" onclick="cancelForm(this, null, 'employees')">Cancelar</button>
     </form>`;
 }
 
@@ -98,7 +98,7 @@ async function changeEmployeeHotel(employeeId) {
         ${hotels.map(h => `<option value="${h.hotelId}" ${h.hotelId === e.hotelId ? 'selected' : ''}>${h.name}</option>`).join('')}
       </select>
       <button type="submit">Cambiar Hotel</button>
-      <button type="button" onclick="cancelForm(this)">Cancelar</button>
+      <button type="button" onclick="cancelForm(this, null, 'employees')">Cancelar</button>
     </form>`;
 }
 

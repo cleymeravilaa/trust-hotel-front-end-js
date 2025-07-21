@@ -47,7 +47,7 @@ function showRegisterNewRoomForm(r = {}) {
       </select>
       <input name="basePrice" type="number" value="${r.basePrice || ''}" required placeholder="Precio Base">
       <button type="submit">Guardar</button>
-      <button type="button" onclick="cancelForm(this, 'new-room-btn')" class="cancel-btn">Cancelar</button>
+      <button type="button" onclick="cancelForm(this, 'new-room-btn', 'rooms')" class="cancel-btn">Cancelar</button>
     </form>`;
 }
 
@@ -71,7 +71,7 @@ function showUpdateRoomForm(r = {}) {
       </select>
       <input name="basePrice" type="number" value="${r.basePrice || ''}" required placeholder="Precio Base">
       <button type="submit">Guardar</button>
-      <button type="button" onclick="this.parentElement.parentElement.classList.add('hidden')">Cancelar</button>
+      <button type="button" onclick="cancelForm(this, null, 'rooms')">Cancelar</button>
     </form>`;
 }
 async function saveRoom(ev, id) {

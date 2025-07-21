@@ -128,8 +128,10 @@ button {
 }
 
 button:hover {
-    background-color: #0096C7;
+    background-color: #878d8f;
     transition: ease 0.3s;
+    color: white;
+    transform: scale3d(1.05, 1.05, 1);
 }
 
 .cards {
@@ -188,4 +190,34 @@ button:hover {
     margin: 0 ;
     flex-direction: column;
     gap: 1.5rem
+}
+
+#reception-content .subheader div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.btn-title-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.search-customer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-left: 100px;
+}
+
+.search-customer input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
