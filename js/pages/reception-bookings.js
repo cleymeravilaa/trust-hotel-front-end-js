@@ -32,6 +32,7 @@ async function loadReservations(customerDni) {
           <th>Fecha de finalización</th>
           <th>Depósito Avance</th>
           <th>ID Habitaciones</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -54,6 +55,7 @@ async function loadReservations(customerDni) {
       <td>${r.startDate}</td><td>${r.endDate}</td>
       <td>${r.advanceDeposit}</td> 
       <td>${r.rooms ? r.rooms.map(room => `<span class="room-id">${room.roomId}</span>`).join(', ') : 'N/A'}</td>
+      <td>${r.status}</td>
       <td>
         <button class="btn edit" onclick="editReservation(${r.bookingId})">✏️</button>
         <button class="btn delete" onclick="deleteReservation(${r.id})">🗑️</button>
@@ -70,14 +72,17 @@ function showReservationForm(r={}) {
   f.innerHTML = `
       <div>
         <input name="customerId" value="${r.customerId||''}" placeholder="ID Cliente" required disabled hidden>
-        <input name="customerDni" value="${r.dni || ''}" placeholder="DNI Cliente" required disabled>
-        <input name="customerName"value="${r.name || ''}" placeholder="Nombre Cliente" required disabled>
+        <input name="customerDni" value="${r.customerDni || ''}" placeholder="DNI Cliente" required disabled>
+        <input name="customerName"value="${r.customerName || ''}" placeholder="Nombre Cliente" required disabled>
       </div>
       <div class="search-room">
         <form onsubmit="searchRooms(event)">
           <select name="hotelId" required>
+            ${r.bookingId ? `<option value="${r.hotelId}"  selected>${r.hotelName}</option>` :`
             <option value="" disabled selected>Seleccione un hotel</option>
-            ${Object.entries(hotelsName).map(([id, name]) => `<option value="${id}" ${r.hotelId === id ? 'selected' : ''}>${name}</option>`).join('')}
+            ${Object.entries(hotelsName).map(([id, name]) => `
+              <option value="${id}" ${r.hotelId === id ? 'selected' : ''}>${name}</option>
+            `).join('')}`}
           </select>
           <input name="startDate" type="date" value="${r.startDate||''}" required>
           <input name="endDate" type="date" value="${r.endDate||''}" required>
@@ -97,7 +102,7 @@ function showReservationForm(r={}) {
           <tbody id="rooms-tbody"></tbody>
         </table>
       </div>
-      <button type="button" onclick="saveBooking()">Guardar</button>
+      <button type="button" onclick="saveBooking(${r.bookingId})">Guardar</button>
       <button type="button" onclick="cancelForm(this, 'new-booking-btn', 'bookings')">Cancelar</button>
     </div>`;
    document.getElementsByName('customerName')[0].disabled = true; // Deshabilitar el campo de nombre del cliente
@@ -122,29 +127,29 @@ async function deleteReservation(id) {
   loadReservations();
 }
 
-function searchCustomerForBooking() {
+async function searchCustomerForBooking() {
   const input = document.getElementById('input-booking-search');
   const customerDni = input.value;
   if (!customerDni) {
     alert('Por favor, ingrese un DNI válido.');
     return;
   }
-  apiGet(`customers/dni/${customerDni}`)
-    .then(customer => {
-      if (customer) {
-        alert(`Cliente encontrado: ${customer.name} (ID: ${customer.customerId})`);
-        input.value = ''; // Limpiar el campo de búsqueda
-        showReservationForm(customer);
-      } else {
-        alert('Cliente no encontrado.');
-      }
-    })
-    .catch(error => {
-      console.error('Error al buscar el cliente:', error);
-      alert('Error al buscar el cliente. Por favor, inténtelo de nuevo.');
-    });
-
-   loadReservations(customerDni);
+  const customer = await apiGet(`customers/dni/${customerDni}`);
+  if (!customer) {
+    alert('Cliente no encontrado. Por favor, verifique el DNI e inténtelo de nuevo.');
+    return;
+  } else {
+    alert(`Cliente encontrado: ${customer.name} (${customer.dni})`);
+    loadReservations(customer.dni);
+    console.log('Cliente encontrado:', customer);
+    document.getElementById('title').innerText = `Reservas de ${customer.name} : ${customer.dni}`;
+    input.disabled = true; // Deshabilitar el campo de búsqueda una vez encontrado el cliente
+    document.getElementById('reservation-form').classList.remove('hidden');
+    showReservationForm();
+    document.getElementById('reservation-form').querySelector('input[name="customerDni"]').value = customer.dni;
+    document.getElementById('reservation-form').querySelector('input[name="customerName"]').value = customer.name;
+    document.getElementById('reservation-form').querySelector('input[name="customerId"]').value = customer.customerId;
+  }
 }
 
 
@@ -188,7 +193,7 @@ function cancelSelectRoom(roomId, tr) {
   console.log('Habitaciones restantes:', selectedRooms);
 }
 
-function saveBooking() {
+function saveBooking(bookingId) {
   if (selectedRooms.length === 0) {
     alert('Por favor, seleccione al menos una habitación.');
     return;
@@ -212,16 +217,31 @@ function saveBooking() {
   console.log('Datos de la reserva:', data);
 
 
-  apiPost('bookings', data)
+  if(bookingId){
+    data.customerId = '';
+    data.hotelId = ''
+    apiPut(`bookings/${bookingId}`,data)
     .then(() => {
       document.getElementById('reservation-form').classList.add('hidden');
       loadReservations();
-      
-      selectedRooms = []; // Limpiar la lista de habitaciones seleccionadas
-      alert('Reserva guardada exitosamente.');
+      selectedRooms = [];
+      alert("Reserva actualizad existomente");
     })
-    .catch(error => {
-      console.error('Error al guardar la reserva:', error);
-      alert('Error al guardar la reserva. Por favor, inténtelo de nuevo.');
-    });
+    .catch(errror => {
+      console.error('Error al guardar la reserva: ', errror);
+      alert('Error al guardar la reserva. Por favor, intentelo de nuevo.')
+    })
+  } else {
+    apiPost('bookings', data)
+      .then(() => {
+        document.getElementById('reservation-form').classList.add('hidden');
+        loadReservations();
+        selectedRooms = []; // Limpiar la lista de habitaciones seleccionadas
+        alert('Reserva guardada exitosamente.');
+      })
+      .catch(error => {
+        console.error('Error al guardar la reserva:', error);
+        alert('Error al guardar la reserva. Por favor, inténtelo de nuevo.');
+      });
+  }
 }
